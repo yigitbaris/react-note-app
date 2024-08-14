@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { UnauthenticatedError } from '../errors/customErrors.js'
+import { UnauthenticatedError } from '../errors/customErrors'
 import { verifyJWT } from '../utils/tokenUtils'
 
 export const authenticateUser = (

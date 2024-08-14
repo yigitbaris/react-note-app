@@ -10,32 +10,50 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 interface ThemeContextType {
   theme: 'light' | 'dark'
   setTheme: (theme: 'light' | 'dark') => void
+  primaryColor: string
+  secondaryColor: string
+  setPrimaryColor: (color: string) => void
+  setSecondaryColor: (color: string) => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [primaryColor, setPrimaryColor] = useState<string>('#1c2023')
+  const [secondaryColor, setSecondaryColor] = useState<string>('#dc004e')
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark'
     if (savedTheme) {
       setTheme(savedTheme)
     }
+
+    const savedPrimaryColor = localStorage.getItem('primaryColor')
+    if (savedPrimaryColor) {
+      setPrimaryColor(savedPrimaryColor)
+    }
+
+    const savedSecondaryColor = localStorage.getItem('secondaryColor')
+    if (savedSecondaryColor) {
+      setSecondaryColor(savedSecondaryColor)
+    }
   }, [])
 
   useEffect(() => {
     localStorage.setItem('theme', theme)
-  }, [theme])
+    localStorage.setItem('primaryColor', primaryColor)
+    localStorage.setItem('secondaryColor', secondaryColor)
+  }, [theme, primaryColor, secondaryColor])
 
   const themeValue = createTheme({
     palette: {
       mode: theme,
       primary: {
-        main: theme === 'light' ? '#1976d2' : '#90caf9',
+        main: primaryColor,
       },
       secondary: {
-        main: theme === 'light' ? '#dc004e' : '#f48fb1',
+        main: secondaryColor,
       },
       background: {
         default: theme === 'light' ? '#ffffff' : '#303030',
@@ -45,7 +63,16 @@ const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
   })
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setTheme,
+        primaryColor,
+        secondaryColor,
+        setPrimaryColor,
+        setSecondaryColor,
+      }}
+    >
       <ThemeProvider theme={themeValue}>{children}</ThemeProvider>
     </ThemeContext.Provider>
   )

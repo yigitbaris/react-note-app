@@ -1,17 +1,14 @@
-import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Login from './pages/Login'
 import ErrorPage from './components/ErrorPage'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import Settings from './pages/Settings'
 import NoteDetail from './pages/NoteDetail'
+import Layout from './pages/Layout'
+import AddNote from './pages/AddNote'
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Navigate to='/login' replace />,
-    errorElement: <ErrorPage />,
-  },
   {
     index: true,
     path: '/login',
@@ -24,19 +21,32 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/home',
-    element: <Home />,
+    path: '/',
+    element: <Layout />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: '/settings',
-    element: <Settings />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/note-detail/:id',
-    element: <NoteDetail />,
-    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/home',
+        index: true,
+        element: <Home />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/settings',
+        element: <Settings />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/add-note',
+        element: <AddNote />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/note-detail/:id',
+        element: <NoteDetail />,
+        errorElement: <ErrorPage />,
+      },
+    ],
   },
 ])
 

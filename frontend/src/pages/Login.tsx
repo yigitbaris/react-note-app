@@ -11,15 +11,33 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate()
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+    const requestData = {
+      email: data.get('email') as string,
+      password: data.get('password') as string,
+    }
+    try {
+      await axios.post('/auth/login', requestData)
+      toast.success('Login successful')
+      navigate('/home')
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error?.response?.data?.msg || 'Login failed')
+      } else {
+        console.error(error)
+        toast.error('An unexpected error occurred')
+      }
+    }
   }
 
   return (
@@ -49,6 +67,7 @@ const Login = () => {
             name='email'
             autoComplete='email'
             autoFocus
+            value='baris@gmail.com'
           />
           <TextField
             margin='normal'
@@ -59,6 +78,7 @@ const Login = () => {
             type='password'
             id='password'
             autoComplete='current-password'
+            value='secret1'
           />
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}

@@ -14,13 +14,17 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.4",
+    "axios": "^1.7.2",
     "react": "^18.3.1",
+    "react-color": "^2.19.3",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
+    "react-toastify": "^10.0.5",
     "styled-component": "^2.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
+    "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
