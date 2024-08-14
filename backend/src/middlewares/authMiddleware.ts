@@ -15,7 +15,7 @@ export const authenticateUser = (
 
   try {
     const { userId } = verifyJWT(token)
-    req.user = { userId }
+    req.userNumber = { userId }
     next()
   } catch (error) {
     throw new UnauthenticatedError('authentication invalid')

@@ -1,6 +1,13 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
+declare global {
+  namespace Express {
+    interface Request {
+      userNumber?: any
+    }
+  }
+}
 const app = express()
 import morgan from 'morgan'
 import mongoose from 'mongoose'

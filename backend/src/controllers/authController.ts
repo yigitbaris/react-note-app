@@ -50,12 +50,9 @@ export const logout = async (
   next: NextFunction
 ) => {
   try {
-    res.cookie('token', '', {
+    res.cookie('token', 'none', {
       httpOnly: true,
       expires: new Date(0), // Set expiration to the past to delete the cookie
-      maxAge: 0, // Ensures immediate expiration
-      path: '/', // Should match the path used when the cookie was set
-      sameSite: 'strict', // For additional security
     })
     res.status(StatusCodes.OK).json({ msg: 'user logged out' })
   } catch (error) {

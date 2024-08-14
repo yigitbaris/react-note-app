@@ -12,6 +12,8 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -38,8 +40,19 @@ const Navbar = () => {
   const handleSettingsClick = () => {
     navigate('/settings')
   }
-  const handleLogoutClick = () => {
-    navigate('/login')
+  const handleLogoutClick = async () => {
+    try {
+      await axios.get('/auth/log-out')
+      toast.success('Login successful')
+      navigate('/login')
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error?.response?.data?.msg || 'Logout failed')
+      } else {
+        console.error(error)
+        toast.error('An unexpected error occurred')
+      }
+    }
   }
 
   return (

@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { Request, Response, NextFunction } from 'express'
 import Note from '../models/NoteModel'
+import { log } from 'console'
 
 export const denemelikNot = async (
   req: Request,
@@ -16,7 +17,7 @@ export const createNote = async (
   next: NextFunction
 ) => {
   try {
-    //  const userId = req.user
+    req.body.createdBy = req.userNumber.userId
 
     const note = await Note.create(req.body)
     res.status(StatusCodes.CREATED).json({ note })
