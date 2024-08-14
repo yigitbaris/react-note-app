@@ -17,7 +17,6 @@ export const createNote = async (
 ) => {
   try {
     //  const userId = req.user
-    //  console.log(userId)
 
     const note = await Note.create(req.body)
     res.status(StatusCodes.CREATED).json({ note })

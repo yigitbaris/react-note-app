@@ -36,7 +36,6 @@ export const login = async (
     res.cookie('token', token, {
       httpOnly: true,
       expires: new Date(Date.now() + oneDay),
-      secure: process.env.NODE_ENV === 'production',
     })
 
     res.status(StatusCodes.OK).json({ msg: 'user logged in' })
@@ -51,7 +50,14 @@ export const logout = async (
   next: NextFunction
 ) => {
   try {
-    res.status(StatusCodes.CREATED).json({ msg: 'denemelik logout route' })
+    res.cookie('token', '', {
+      httpOnly: true,
+      expires: new Date(0), // Set expiration to the past to delete the cookie
+      maxAge: 0, // Ensures immediate expiration
+      path: '/', // Should match the path used when the cookie was set
+      sameSite: 'strict', // For additional security
+    })
+    res.status(StatusCodes.OK).json({ msg: 'user logged out' })
   } catch (error) {
     next(error)
   }

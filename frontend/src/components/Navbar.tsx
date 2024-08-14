@@ -36,8 +36,10 @@ const Navbar = () => {
     setAnchorElUser(null)
   }
   const handleSettingsClick = () => {
-    console.log('deneme')
     navigate('/settings')
+  }
+  const handleLogoutClick = () => {
+    navigate('/login')
   }
 
   return (
@@ -140,7 +142,7 @@ const Navbar = () => {
               <MenuItem onClick={handleSettingsClick}>
                 <Typography textAlign='center'>Settings</Typography>
               </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={handleLogoutClick}>
                 <Typography textAlign='center'>Log Out</Typography>
               </MenuItem>
             </Menu>

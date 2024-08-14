@@ -9,7 +9,7 @@ import {
 
 //note routes
 router.get('/not-denemelik', denemelikNot)
-router.get('/getNote', getNote)
-router.post('/createNote', createNote)
+router.get('/get-note', getNote)
+router.post('/create-note', createNote)
 
 export default router

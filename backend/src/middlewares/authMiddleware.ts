@@ -8,7 +8,10 @@ export const authenticateUser = (
   next: NextFunction
 ) => {
   const { token } = req.cookies
-  if (!token) throw new UnauthenticatedError('authentication invalid')
+
+  if (!token) {
+    throw new UnauthenticatedError('authentication invalid')
+  }
 
   try {
     const { userId } = verifyJWT(token)

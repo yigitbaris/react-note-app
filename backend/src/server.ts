@@ -1,20 +1,27 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-import express, { Request, Response } from 'express'
+import express from 'express'
+const app = express()
+import morgan from 'morgan'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
 
 import authRouter from './routes/authRouter'
 import noteRouter from './routes/noteRouter'
 import { authenticateUser } from './middlewares/authMiddleware'
 
-const app = express()
 const port = 3000
+
+app.use(morgan('dev'))
+app.use(cookieParser())
+
 app.use(express.json())
 
 //routers
 app.use('/auth', authRouter)
 //authenticate router eklenecek
-app.use('/note', noteRouter)
+app.use('/note', authenticateUser, noteRouter)
+// app.use('/note', noteRouter)
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'not found' })
